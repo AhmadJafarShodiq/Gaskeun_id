@@ -20,6 +20,7 @@ class ServiceController extends Controller
             'description' => 'required|string|max:1000',
             'icon' => 'required|string|max:50',
             'base_price' => 'required|numeric|min:0',
+            'discount_price' => 'nullable|numeric|min:0',
             'estimated_days' => 'required|numeric|min:1|max:365',
             'whatsapp_number' => 'nullable|string|max:20',
         ]);
@@ -36,6 +37,7 @@ class ServiceController extends Controller
             'description' => 'required|string|max:1000',
             'icon' => 'required|string|max:50',
             'base_price' => 'required|numeric|min:0',
+            'discount_price' => 'nullable|numeric|min:0',
             'estimated_days' => 'required|numeric|min:1|max:365',
             'whatsapp_number' => 'nullable|string|max:20',
         ]);

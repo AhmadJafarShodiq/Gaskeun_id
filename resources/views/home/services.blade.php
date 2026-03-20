@@ -19,9 +19,16 @@
                 @foreach($services as $index => $service)
                 <div class="bg-white border border-slate-200 rounded-3xl p-6 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
 
-                    <!-- Top: Icon -->
-                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-lg mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                        <i class="fa-solid {{ $service->icon }}"></i>
+                    <!-- Top: Icon & Badge -->
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-lg group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                            <i class="fa-solid {{ $service->icon }}"></i>
+                        </div>
+                        @if($service->discount_price)
+                            <span class="bg-rose-100 text-rose-600 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-rose-200">
+                                Diskon
+                            </span>
+                        @endif
                     </div>
 
                     <!-- Title -->
@@ -34,7 +41,14 @@
                     <div class="flex items-end justify-between mb-4 border-t border-slate-100 pt-4">
                         <div>
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Mulai dari</p>
-                            <p class="text-xl font-black text-blue-600">Rp {{ number_get_formatted($service->base_price) }}</p>
+                            @if($service->discount_price)
+                                <div class="flex flex-col">
+                                    <p class="text-[10px] text-slate-400 line-through decoration-rose-500/50 mb-0.5">Rp {{ number_get_formatted($service->base_price) }}</p>
+                                    <p class="text-xl font-black text-rose-600">Rp {{ number_get_formatted($service->discount_price) }}</p>
+                                </div>
+                            @else
+                                <p class="text-xl font-black text-blue-600">Rp {{ number_get_formatted($service->base_price) }}</p>
+                            @endif
                         </div>
                         <div class="text-right">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Estimasi</p>
@@ -49,7 +63,7 @@
                         <i class="fa-solid fa-comments"></i> Tanya Admin
                     </button>
                     @else
-                    <button onclick="openOrderModal('{{ $service->title }}', {{ $service->base_price }}, '{{ $service->whatsapp_number }}')"
+                    <button onclick="openOrderModal('{{ $service->title }}', {{ $service->discount_price ?? $service->base_price }}, '{{ $service->whatsapp_number }}')"
                             class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black text-sm transition-all shadow-md shadow-blue-600/20 active:scale-95 flex items-center justify-center gap-2">
                         <i class="fa-solid fa-bolt"></i> Pesan Sekarang
                     </button>

@@ -36,7 +36,12 @@
                         <p class="text-[11px] text-slate-500 font-medium leading-relaxed truncate">{{ $service->description }}</p>
                     </td>
                     <td class="py-6">
-                        <p class="font-black text-blue-600 text-sm mb-1">Rp {{ number_format($service->base_price, 0, ',', '.') }}</p>
+                        @if($service->discount_price)
+                            <p class="text-[10px] text-slate-400 line-through mb-0.5">Rp {{ number_format($service->base_price, 0, ',', '.') }}</p>
+                            <p class="font-black text-rose-500 text-sm mb-1">Rp {{ number_format($service->discount_price, 0, ',', '.') }}</p>
+                        @else
+                            <p class="font-black text-blue-600 text-sm mb-1">Rp {{ number_format($service->base_price, 0, ',', '.') }}</p>
+                        @endif
                         <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{{ $service->estimated_days }} Hari</p>
                     </td>
                     <td class="py-6">
@@ -109,7 +114,7 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-2 gap-5">
+            <div class="grid grid-cols-3 gap-5">
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 ml-1">Icon (FontAwesome)</label>
                     <div class="relative group">
@@ -126,6 +131,15 @@
                             <i class="fa-solid fa-rupiah-sign"></i>
                         </div>
                         <input type="number" name="base_price" placeholder="50000" required class="w-full pl-11 pr-4 py-3.5 bg-slate-50 hover:bg-slate-100 focus:bg-white rounded-2xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-700 placeholder:text-slate-400 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 ml-1">Diskon (Rp)</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                            <i class="fa-solid fa-tag"></i>
+                        </div>
+                        <input type="number" name="discount_price" placeholder="Kosongkan jika tak ada" class="w-full pl-11 pr-4 py-3.5 bg-slate-50 hover:bg-slate-100 focus:bg-white rounded-2xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-semibold text-slate-700 placeholder:text-slate-400 text-sm">
                     </div>
                 </div>
             </div>
@@ -200,7 +214,7 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-2 gap-5">
+            <div class="grid grid-cols-3 gap-5">
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 ml-1">Icon (FontAwesome)</label>
                     <div class="relative group">
@@ -217,6 +231,15 @@
                             <i class="fa-solid fa-rupiah-sign"></i>
                         </div>
                         <input type="number" name="base_price" id="e_price" required class="w-full pl-11 pr-4 py-3.5 bg-slate-50 hover:bg-slate-100 focus:bg-white rounded-2xl border border-slate-200 outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all font-semibold text-slate-700 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 ml-1">Diskon (Rp)</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-orange-500 transition-colors">
+                            <i class="fa-solid fa-tag"></i>
+                        </div>
+                        <input type="number" name="discount_price" id="e_discount" placeholder="Kosongkan jika tak ada" class="w-full pl-11 pr-4 py-3.5 bg-slate-50 hover:bg-slate-100 focus:bg-white rounded-2xl border border-slate-200 outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all font-semibold text-slate-700 placeholder:text-slate-400 text-sm">
                     </div>
                 </div>
             </div>
@@ -258,6 +281,7 @@
         document.getElementById('e_desc').value = service.description;
         document.getElementById('e_icon').value = service.icon;
         document.getElementById('e_price').value = service.base_price;
+        document.getElementById('e_discount').value = service.discount_price || '';
         document.getElementById('e_days').value = service.estimated_days;
         document.getElementById('e_wa').value = service.whatsapp_number || '';
         document.getElementById('editModal').classList.remove('hidden');
