@@ -25,9 +25,17 @@
                             <i class="fa-solid {{ $service->icon }}"></i>
                         </div>
                         @if($service->discount_price)
-                            <span class="bg-rose-100 text-rose-600 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-rose-200">
-                                Diskon
-                            </span>
+                            @php
+                                $hemat = $service->base_price - $service->discount_price;
+                            @endphp
+                            <div class="flex flex-col items-end">
+                                <span class="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl shadow-lg shadow-rose-500/30 animate-pulse flex items-center gap-1">
+                                    <i class="fa-solid fa-fire text-yellow-300"></i> PROMO
+                                </span>
+                                <span class="text-[9px] font-black text-rose-500 mt-1.5 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-100">
+                                    Hemat Rp {{ number_get_formatted($hemat) }}
+                                </span>
+                            </div>
                         @endif
                     </div>
 
